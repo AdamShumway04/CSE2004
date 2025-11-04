@@ -1,0 +1,17 @@
+/* Header 1 Styles*/
+h1 {
+    color: red;
+}
+
+.highlight {
+    background-color: yellow;
+    padding: 5px;
+}
+
+#tours {
+    font-size: 5px;
+}
+
+.container > p {
+    margin: 10px 0;
+  }

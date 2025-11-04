@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MVP Finder</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>MVP Finder</h1>
+    <p>Who was the MVP the year you were born?</p>
+  </header>
+
+  <main>
+    <!-- Sport Buttons -->
+    <div class="sport-selector">
+      <button class="pill" data-sport="NBA" aria-pressed="false">
+        <img src="images/nba.png" alt="NBA logo" />
+      </button>
+      <button class="pill" data-sport="NFL" aria-pressed="false">
+        <img src="images/nfl.png" alt="NFL logo" />
+      </button>
+      <button class="pill" data-sport="MLB" aria-pressed="false">
+        <img src="images/mlb.png" alt="MLB logo" />
+      </button>
+    </div>
+
+    <!-- Input and Actions -->
+    <section class="input-area">
+      <input type="number" id="year" placeholder="Enter a year (e.g. 2004)" />
+      <button id="findBtn">Find MVP</button>
+      <button id="clearBtn" class="secondary">Clear</button>
+      <button id="decadeBtn" class="secondary">Toggle Decade View</button>
+    </section>
+
+    <!-- Error Message -->
+    <div id="errorBanner" class="error" style="display: none;"></div>
+
+    <!-- Main Result Section -->
+    <section class="result">
+      <h2 id="resultBody" class="placeholder">
+        Select a sport and enter your birth year to uncover your MVP.
+      </h2>
+    </section>
+
+    <!-- Decade View Table -->
+    <section id="decadeList" class="decade" style="display: none;">
+      <h3>Decade MVPs</h3>
+      <table>
+        <thead>
+          <tr><th>Year</th><th>MVP(s)</th></tr>
+        </thead>
+        <tbody id="decadeTbody"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    <p>The Official MVP Finder for American Sports</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

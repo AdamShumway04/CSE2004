@@ -1,0 +1,227 @@
+* {box-sizing: border-box; margin: 0; padding: 0;}
+
+img, svg, video {
+    max-width: 100%;
+    display: block;
+}
+
+body {
+    font-family: system-ui;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    color: black;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+}
+
+header{
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem;
+    border-bottom: 4px solid grey;
+}
+
+a {
+    text-decoration: none;
+    position: relative;
+    color: rgb(205, 91, 35);
+}
+
+a::after{
+    content: "";
+    background: currentColor;
+    position: absolute;
+    bottom: -1px;
+    left: 0; /* dots in nav */
+    width: 0%;
+    height: 3px;
+    transition: all 0.2s ease;
+    
+}
+
+a:hover {
+    color: rgb(205, 91, 35);
+    border-bottom: 2px solid brown;
+
+}
+
+
+a:hover::after{
+    width: 100%;
+}
+
+@media (max-width: 640px) {
+    header{
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    nav{
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .slider{ height: 200px; }
+    h1{ font-size: 1.6rem; }
+    h2{ font-size: 1.25rem; }
+    p{ width: min(65ch, 100% - 2rem); padding: 1rem 0; }
+    th, td{ padding: 4px 10px; }
+}
+
+nav {
+    display: flex;
+    gap: 1rem;
+}
+main {
+    flex-grow: 1;
+    background-color: rgb(221, 219, 219);
+}
+.slider {
+    position: relative;
+    width: 100vw;
+    height: 550px;
+    overflow: hidden;
+    box-shadow: 0px 20px 20px rgb(205, 91, 35);
+}
+
+.slider img {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform 1s ease, filter 1s ease, opacity 0s ease 1s;
+}
+
+.slider img.active {
+    opacity: 1;
+    transition: transform 1s ease, filter 1s ease;
+    z-index: 1;
+}
+
+h1{
+    font-family: "Times New Roman";
+    color: rgb(205, 91, 35);
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 2rem;
+    position: relative;
+    z-index: 2;
+    transform: rotate(-5deg);
+    text-shadow: 
+        5px 5px 0px lightgrey,
+        -5px 5px 0px white,
+        5px -5px 0px white,
+        -5px -5px 0px white;
+
+}
+
+h2{
+    font-family: "Times New Roman";
+    color: rgb(205, 91, 35);
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+p{
+    text-align: center;
+    font-size: small;
+    color: grey;
+    width: min(80ch, 100% - 6rem);
+    margin: auto;
+    padding: 7px 0 7px;
+}
+
+li{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: medium;
+    color: black;
+    text-align: center;
+    
+}
+
+table{
+    font-size: medium;
+    text-align: center;
+    
+}
+
+.table-box {
+    display: flex;
+    justify-content: center;
+}
+
+th, td{
+    padding: 4px 20px;
+}
+
+form{
+    font-size: medium;
+    text-align: center;
+}
+
+
+.afc-north{
+    font-family: 'Times New Roman', Times, serif;
+    color: red;
+    font-weight: bold;
+}
+
+.ravens{
+    color: purple;
+    font-weight: bold;
+}
+.bengals{
+    color: rgb(230, 157, 21);
+    font-weight: bold;
+}
+.steelers{
+    color: rgb(138, 138, 8);
+    font-weight: bold;
+}
+
+.links-list{
+    list-style: none;
+    padding: 0;
+}
+  
+.links-list li{
+    margin: 8px 0;
+}
+  
+.links-list a{
+    color: rgb(230, 157, 21);
+    font-weight: bold;
+}
+  
+.links-list a:hover{
+    text-decoration: underline;
+    color: brown;
+}
+
+.newsletter{
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+    padding: 3rem 0 1rem;
+}
+
+form{
+    padding: 0 0 1rem;
+}
+
+footer {
+    padding: 1rem;
+    background-color: rgb(205, 91, 35);
+    color: white;
+    text-align: center;
+    font-weight: bold;
+
+}
