@@ -15,6 +15,10 @@ let currentFilter = "all"; // "all" | "wins"
 let favorites = [];
 const FAVORITES_KEY = "viva_spurs_favorites";
 
+// Load-more paging
+const LOAD_BATCH_SIZE = 9;
+let visibleGamesCount = LOAD_BATCH_SIZE;
+
 let triviaQuestions = [];
 let currentQuestionIndex = 0;
 let triviaScore = 0;
@@ -29,6 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
   initTriviaQuestions();
   initTriviaUI();
   initSeasonSelect();
+  initLoadMoreButton();
+  initCollapseButton(); // NEW
 
   fetchTeamInfo();
   fetchRecentGames();
@@ -90,7 +96,9 @@ async function fetchRecentGames(season = currentSeason) {
 
     // Match apiTest.html: sort by date DESC, then take the most recent 10
     games.sort((a, b) => new Date(b.date) - new Date(a.date));
-    games = games.slice(0, 10);
+
+    // Reset visible count whenever we (re)load a season
+    visibleGamesCount = LOAD_BATCH_SIZE;
 
     // Map to richer structure for the UI
     allGames = games.map((game) => {
@@ -177,19 +185,48 @@ function initFilterButtons() {
       chips.forEach((c) => c.classList.remove("chip-active"));
       chip.classList.add("chip-active");
 
+      // Reset paging on filter change
+      visibleGamesCount = LOAD_BATCH_SIZE;
       renderGames();
     });
   });
 }
 
+function initLoadMoreButton() {
+  const btn = document.getElementById("load-more-games");
+  if (!btn) return;
+
+  btn.addEventListener("click", () => {
+    visibleGamesCount += LOAD_BATCH_SIZE;
+    renderGames();
+  });
+}
+
+function initCollapseButton() {
+  const btn = document.getElementById("collapse-games");
+  if (!btn) return;
+
+  btn.addEventListener("click", () => {
+    // Reset to the initial batch (most recent games)
+    visibleGamesCount = LOAD_BATCH_SIZE;
+    renderGames();
+  });
+}
+
 function renderGames() {
   const gamesContainer = document.getElementById("games-container");
+  const loadMoreBtn = document.getElementById("load-more-games");
+  const collapseBtn = document.getElementById("collapse-games");
+
   if (!allGames.length) {
     gamesContainer.innerHTML =
       '<p class="loading-text">No games loaded yet.</p>';
+    if (loadMoreBtn) loadMoreBtn.style.display = "none";
+    if (collapseBtn) collapseBtn.style.display = "none";
     return;
   }
 
+  // Apply filter
   let gamesToShow = allGames;
   if (currentFilter === "wins") {
     gamesToShow = allGames.filter((g) => g.isWin);
@@ -198,10 +235,19 @@ function renderGames() {
   if (!gamesToShow.length) {
     gamesContainer.innerHTML =
       '<p class="loading-text">No games match this filter.</p>';
+    if (loadMoreBtn) loadMoreBtn.style.display = "none";
+    if (collapseBtn) collapseBtn.style.display = "none";
     return;
   }
 
-  gamesContainer.innerHTML = gamesToShow
+  // Limit by visibleGamesCount (paging)
+  const totalAvailable = gamesToShow.length;
+  const limitedGames = gamesToShow.slice(0, visibleGamesCount);
+  const hasMore = visibleGamesCount < totalAvailable;
+  const canCollapse =
+    totalAvailable > LOAD_BATCH_SIZE && visibleGamesCount > LOAD_BATCH_SIZE;
+
+  gamesContainer.innerHTML = limitedGames
     .map((game) => {
       const resultText = game.isWin ? "W" : "L";
       const resultClass = game.isWin ? "status-win" : "status-loss";
@@ -218,9 +264,7 @@ function renderGames() {
           </div>
           <div class="game-opponent">${game.opponentName}</div>
           <div class="game-scoreline">
-            Spurs ${game.spursScore} – ${
-        game.oppScore
-      } <span>(${locationLabel})</span>
+            Spurs ${game.spursScore} – ${game.oppScore} <span>(${locationLabel})</span>
           </div>
 
           <div class="game-footer">
@@ -249,9 +293,17 @@ function renderGames() {
     })
     .join("");
 
+  // Show / hide Load More and Collapse buttons
+  if (loadMoreBtn) {
+    loadMoreBtn.style.display = hasMore ? "inline-flex" : "none";
+  }
+  if (collapseBtn) {
+    collapseBtn.style.display = canCollapse ? "inline-flex" : "none";
+  }
+
   // Attach event listeners (delegation)
   gamesContainer.addEventListener("click", handleGameCardClick, {
-    once: true,
+    once: true
   });
 }
 

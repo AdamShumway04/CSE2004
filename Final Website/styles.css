@@ -325,6 +325,18 @@ main {
   gap: 0.9rem;
 }
 
+.load-more-btn {
+  margin-top: 0.9rem;
+  display: inline-flex;
+  margin-left: auto;
+}
+
+.collapse-btn {
+  margin-top: 0.5rem;
+  display: inline-flex;
+  margin-left: auto;
+}
+
 .game-card {
   background: #141414;
   border-radius: 12px;
