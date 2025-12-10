@@ -14,7 +14,9 @@
   <header class="site-header">
     <div class="site-header-inner">
       <div class="logo-lockup">
-        <span class="logo-icon">⭐</span>
+        <span class="logo-icon">
+          <img src="images/spurslogo2.png" alt="San Antonio Spurs logo" />
+        </span>
         <span class="logo-text">Viva La Spurs</span>
       </div>
 
@@ -28,10 +30,14 @@
   </header>
 
   <main>
-    <!-- HERO / INTRO -->
+    <!-- hero/intro section -->
     <section id="hero" class="panel hero">
       <div class="hero-content">
         <h1>Viva La Spurs</h1>
+        <img src="images/spurslogo1.png"
+          alt="San Antonio Spurs wordmark"
+          class="hero-wordmark"
+        />
         <p class="hero-tagline">
           A San Antonio Spurs fan hub mixing <strong>current results</strong>, <strong>legendary
           history</strong>, and <strong>interactive tools</strong>.
@@ -45,21 +51,15 @@
       </div>
 
       <div class="hero-visual">
-        <div class="hero-circle hero-circle-main"></div>
-        <div class="hero-circle hero-circle-accent"></div>
-        <div class="hero-wemby-card">
-          <p class="hero-wemby-label">Featured Era</p>
-          <h2>Victor Wembanyama</h2>
-          <p class="hero-wemby-text">
-            The new face of the franchise — bridging the legacy of Duncan, Manu, and Parker
-            with the Spurs’ next championship window.
-          </p>
-          <p class="hero-era-tag">The Wemby Era</p>
+        <div class="hero-slideshow">
+          <img src="images/spurs1.png" alt="San Antonio Spurs 1" class="hero-slide active" />
+          <img src="images/spurs2.png" alt="San Antonio Spurs 2" class="hero-slide" />
+          <img src="images/spurs3.png" alt="San Antonio Spurs 3" class="hero-slide" />
         </div>
       </div>
     </section>
 
-    <!-- RECENT GAMES -->
+    <!-- recent games section -->
     <section id="recent-games" class="panel">
       <header class="panel-header">
         <div>
@@ -97,7 +97,6 @@
           Load more games
         </button>
 
-        <!-- NEW: Collapse games button -->
         <button
           id="collapse-games"
           class="btn secondary collapse-btn"
@@ -112,8 +111,7 @@
         </p>
       </section>
 
-
-    <!-- TEAM HISTORY & LEGENDS -->
+    <!-- team history & legends section -->
     <section id="history" class="panel">
       <header class="panel-header">
         <div>
@@ -172,7 +170,7 @@
       </div>
     </section>
 
-    <!-- FAN ZONE -->
+    <!-- fan zone section -->
     <section id="fan-zone" class="panel fan-zone">
       <header class="panel-header">
         <div>
@@ -184,7 +182,7 @@
       </header>
 
       <div class="fan-zone-grid">
-        <!-- FAVORITES -->
+        <!-- favorites section -->
         <section class="fan-block">
           <h3>My Favorite Games</h3>
           <p class="fan-block-subtitle">
@@ -195,7 +193,7 @@
           </div>
         </section>
 
-        <!-- TRIVIA -->
+        <!-- trivia quiz section -->
         <section class="fan-block">
           <h3>Spurs Trivia</h3>
           <p class="fan-block-subtitle">
@@ -220,7 +218,7 @@
 
   <footer class="site-footer">
     <p>
-      Built for CSE 2004 — Viva La Spurs. Data from
+      Final Project for CSE 2004 - Viva La Spurs. Data from
       <a href="https://app.balldontlie.io/" target="_blank" rel="noreferrer">BallDontLie API</a>.
     </p>
   </footer>

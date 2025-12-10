@@ -1,21 +1,20 @@
-// Viva La Spurs - Main JS
-// NOTE: Replace this with your own BallDontLie API key.
+// note: replace this with your own BallDontLie API key.
 const API_KEY = "36c123e4-1d22-4f1a-b444-011d38c62afe";
 const BASE_URL = "https://api.balldontlie.io/v1";
 const SPURS_ID = 27;
 
-// Default to the same season as your working apiTest file:
 // BallDontLie uses the season *start* year, so 2022 = 2022–2023
+// I am starting with the 2022-23 season because its the most recent completed season stats-wise for the API I am using
 const ACTIVE_SEASON = 2022;
 let currentSeason = ACTIVE_SEASON;
 
-// Global state
+// global state
 let allGames = [];
 let currentFilter = "all"; // "all" | "wins"
 let favorites = [];
 const FAVORITES_KEY = "viva_spurs_favorites";
 
-// Load-more paging
+// load-more paging
 const LOAD_BATCH_SIZE = 9;
 let visibleGamesCount = LOAD_BATCH_SIZE;
 
@@ -24,7 +23,7 @@ let currentQuestionIndex = 0;
 let triviaScore = 0;
 let questionLocked = false;
 
-// Init
+// init
 document.addEventListener("DOMContentLoaded", () => {
   initSmoothScroll();
   initScrollSpy();
@@ -34,15 +33,14 @@ document.addEventListener("DOMContentLoaded", () => {
   initTriviaUI();
   initSeasonSelect();
   initLoadMoreButton();
-  initCollapseButton(); // NEW
+  initCollapseButton();
+  initHeroSlideshow();
 
   fetchTeamInfo();
   fetchRecentGames();
 });
 
-/* -----------------------------
-   TEAM INFO
------------------------------ */
+/* team info section */
 async function fetchTeamInfo() {
   const blurb = document.getElementById("team-blurb");
   try {
@@ -63,9 +61,7 @@ async function fetchTeamInfo() {
   }
 }
 
-/* -----------------------------
-   RECENT GAMES
------------------------------ */
+/* recent games section */
 async function fetchRecentGames(season = currentSeason) {
   const gamesContainer = document.getElementById("games-container");
   const seasonLabel = document.getElementById("season-label");
@@ -94,13 +90,12 @@ async function fetchRecentGames(season = currentSeason) {
       return;
     }
 
-    // Match apiTest.html: sort by date DESC, then take the most recent 10
     games.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-    // Reset visible count whenever we (re)load a season
+    // reset visible count whenever we (re)load a season
     visibleGamesCount = LOAD_BATCH_SIZE;
 
-    // Map to richer structure for the UI
+    // map to richer structure for the UI
     allGames = games.map((game) => {
       const home = `${game.home_team.city} ${game.home_team.name}`;
       const away = `${game.visitor_team.city} ${game.visitor_team.name}`;
@@ -143,14 +138,11 @@ async function fetchRecentGames(season = currentSeason) {
   }
 }
 
-/* -----------------------------
-   SEASON SELECT
------------------------------ */
+/* season select section */
 function initSeasonSelect() {
   const select = document.getElementById("season-select");
   if (!select) return;
 
-  // You can adjust this range however you like
   const seasons = [
     ACTIVE_SEASON,
     ACTIVE_SEASON - 1,
@@ -185,7 +177,7 @@ function initFilterButtons() {
       chips.forEach((c) => c.classList.remove("chip-active"));
       chip.classList.add("chip-active");
 
-      // Reset paging on filter change
+      // reset paging on filter change
       visibleGamesCount = LOAD_BATCH_SIZE;
       renderGames();
     });
@@ -207,10 +199,24 @@ function initCollapseButton() {
   if (!btn) return;
 
   btn.addEventListener("click", () => {
-    // Reset to the initial batch (most recent games)
+    // reset to the initial batch (most recent games)
     visibleGamesCount = LOAD_BATCH_SIZE;
     renderGames();
   });
+}
+
+function initHeroSlideshow() {
+  const slides = document.querySelectorAll(".hero-slide");
+  if (!slides.length) return;
+
+  let currentIndex = 0;
+  slides[currentIndex].classList.add("active");
+
+  setInterval(() => {
+    slides[currentIndex].classList.remove("active");
+    currentIndex = (currentIndex + 1) % slides.length;
+    slides[currentIndex].classList.add("active");
+  }, 5000); // 5 seconds per slide
 }
 
 function renderGames() {
@@ -226,7 +232,7 @@ function renderGames() {
     return;
   }
 
-  // Apply filter
+  // apply filter
   let gamesToShow = allGames;
   if (currentFilter === "wins") {
     gamesToShow = allGames.filter((g) => g.isWin);
@@ -240,7 +246,7 @@ function renderGames() {
     return;
   }
 
-  // Limit by visibleGamesCount (paging)
+  // limit by visibleGamesCount (paging)
   const totalAvailable = gamesToShow.length;
   const limitedGames = gamesToShow.slice(0, visibleGamesCount);
   const hasMore = visibleGamesCount < totalAvailable;
@@ -264,7 +270,9 @@ function renderGames() {
           </div>
           <div class="game-opponent">${game.opponentName}</div>
           <div class="game-scoreline">
-            Spurs ${game.spursScore} – ${game.oppScore} <span>(${locationLabel})</span>
+            Spurs ${game.spursScore} – ${
+        game.oppScore
+      } <span>(${locationLabel})</span>
           </div>
 
           <div class="game-footer">
@@ -293,7 +301,7 @@ function renderGames() {
     })
     .join("");
 
-  // Show / hide Load More and Collapse buttons
+  // show / hide Load More and Collapse buttons
   if (loadMoreBtn) {
     loadMoreBtn.style.display = hasMore ? "inline-flex" : "none";
   }
@@ -301,10 +309,8 @@ function renderGames() {
     collapseBtn.style.display = canCollapse ? "inline-flex" : "none";
   }
 
-  // Attach event listeners (delegation)
-  gamesContainer.addEventListener("click", handleGameCardClick, {
-    once: true
-  });
+  // attach event listeners
+  gamesContainer.addEventListener("click", handleGameCardClick);
 }
 
 function handleGameCardClick(event) {
@@ -324,9 +330,7 @@ function handleGameCardClick(event) {
   card.classList.toggle("expanded");
 }
 
-/* -----------------------------
-   FAVORITES (LOCAL STORAGE)
------------------------------ */
+/* favorites storage */
 function initFavorites() {
   try {
     const stored = localStorage.getItem(FAVORITES_KEY);
@@ -393,9 +397,7 @@ function renderFavorites() {
     .join("");
 }
 
-/* -----------------------------
-   TIMELINE INTERACTIONS
------------------------------ */
+/* timeline interactions */
 function initTimeline() {
   const items = document.querySelectorAll(".timeline-item");
   items.forEach((item) => {
@@ -411,9 +413,7 @@ function initTimeline() {
   });
 }
 
-/* -----------------------------
-   SMOOTH SCROLL + NAV HIGHLIGHT
------------------------------ */
+/* smooth scroll and nav highlight */
 function initSmoothScroll() {
   const buttons = document.querySelectorAll("[data-scroll-target]");
   buttons.forEach((btn) => {
@@ -468,9 +468,7 @@ function initScrollSpy() {
   });
 }
 
-/* -----------------------------
-   TRIVIA
------------------------------ */
+/* trivia quiz section */
 function initTriviaQuestions() {
   triviaQuestions = [
     {

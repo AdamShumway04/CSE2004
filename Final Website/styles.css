@@ -1,4 +1,3 @@
-/* CSS RESET / BASE */
 *,
 *::before,
 *::after {
@@ -18,7 +17,7 @@ body {
   line-height: 1.5;
 }
 
-/* COLOR PALETTE (SPURS + FIESTA ACCENTS) */
+/* color palette (includes the spurs fiesta colors) */
 :root {
   --spurs-black: #121212;
   --spurs-gray: #c4ced4;
@@ -30,14 +29,14 @@ body {
   --card-bg: #171717;
 }
 
-/* GLOBAL LAYOUT */
+/* global layout */
 main {
   max-width: 1100px;
   margin: 0 auto;
   padding: 6rem 1.5rem 3rem;
 }
 
-/* HEADER / NAV */
+/* header/nav bar */
 .site-header {
   position: sticky;
   top: 0;
@@ -68,7 +67,15 @@ main {
 }
 
 .logo-icon {
-  font-size: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-icon img {
+  height: 28px;
+  width: auto;
+  display: block;
 }
 
 .logo-text {
@@ -103,7 +110,7 @@ main {
   font-weight: 600;
 }
 
-/* PANELS */
+/* panels */
 .panel {
   background: var(--card-bg);
   border-radius: 14px;
@@ -113,7 +120,7 @@ main {
   box-shadow: 0 18px 40px #00000066;
 }
 
-/* HERO */
+/* hero section */
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
@@ -148,69 +155,54 @@ main {
   min-height: 230px;
 }
 
-.hero-circle {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(1px);
-}
-
-.hero-circle-main {
-  width: 260px;
-  height: 260px;
-  top: 10%;
-  right: -40px;
-  background: radial-gradient(circle, var(--fiesta-teal), #111);
-  opacity: 0.9;
-}
-
-.hero-circle-accent {
-  width: 220px;
-  height: 220px;
-  bottom: -70px;
-  right: 40px;
-  background: radial-gradient(circle, var(--fiesta-pink), #111);
-  opacity: 0.8;
-}
-
-.hero-wemby-card {
-  position: absolute;
-  inset: 16% 6% auto auto;
-  max-width: 330px;
-  background: #101010dd;
+.hero-slideshow {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 230px;
   border-radius: 18px;
+  overflow: hidden;
   border: 1px solid #2e2e2e;
-  padding: 1rem 1rem 0.9rem;
-  backdrop-filter: blur(10px);
   box-shadow: 0 12px 26px #000000aa;
 }
 
-.hero-wemby-label {
-  text-transform: uppercase;
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  color: var(--spurs-silver);
-  margin: 0 0 0.25rem;
+.hero-slideshow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    #000000aa 0%,
+    #00000044 40%,
+    transparent 100%
+  );
+  pointer-events: none;
 }
 
-.hero-wemby-card h2 {
-  margin: 0 0 0.35rem;
-  font-size: 1.25rem;
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.8s ease;
 }
 
-.hero-wemby-text {
-  font-size: 0.9rem;
-  color: #cfcfcf;
-  margin: 0 0 0.45rem;
+.hero-slide.active {
+  opacity: 1;
 }
 
-.hero-era-tag {
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--fiesta-orange);
+.hero-wordmark {
+  max-width: 220px;
+  width: 100%;
+  height: auto;
+  margin-top: 0.25rem;
+  margin-bottom: 0.75rem;
+  opacity: 0.95;
 }
 
-/* BUTTONS */
+/* buttons */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -266,7 +258,7 @@ main {
   font-weight: 600;
 }
 
-/* PANEL HEADER */
+/* panel header */
 .panel-header {
   display: flex;
   justify-content: space-between;
@@ -285,7 +277,7 @@ main {
   font-size: 0.9rem;
 }
 
-/* RECENT GAMES */
+/* recent games section */
 .games-meta {
   display: flex;
   flex-direction: column;
@@ -444,7 +436,7 @@ main {
   opacity: 1;
 }
 
-/* HISTORY TIMELINE */
+/* history timeline section */
 .timeline {
   display: flex;
   flex-direction: column;
@@ -521,7 +513,7 @@ main {
   opacity: 1;
 }
 
-/* FAN ZONE */
+/* fan zone section */
 .fan-zone-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(0, 1.1fr);
@@ -562,7 +554,7 @@ main {
   color: #e6e6e6;
 }
 
-/* TRIVIA */
+/* trvia quiz section */
 .quiz-card {
   background: #151515;
   border-radius: 10px;
@@ -636,7 +628,7 @@ main {
   color: var(--spurs-silver);
 }
 
-/* TEXT UTILITIES */
+/* text utilities */
 .loading-text {
   font-size: 0.9rem;
   color: #bfbfbf;
@@ -648,7 +640,7 @@ main {
   margin-top: 0.7rem;
 }
 
-/* FOOTER */
+/* footer */
 .site-footer {
   max-width: 1100px;
   margin: 0 auto 2rem;
@@ -667,7 +659,7 @@ main {
   text-decoration: underline;
 }
 
-/* RESPONSIVE */
+/* responsive features */
 @media (max-width: 800px) {
   main {
     padding-top: 5rem;
