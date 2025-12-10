@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Viva La Spurs | San Antonio Spurs Fan Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Viva La Spurs — a San Antonio Spurs fan hub with recent games, team history, and an interactive fan zone."
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="logo-lockup">
+        <span class="logo-icon">
+          <img src="images/spurslogo2.png" alt="San Antonio Spurs logo" />
+        </span>
+        <span class="logo-text">Viva La Spurs</span>
+      </div>
+
+      <nav class="site-nav">
+        <a href="#hero">Home</a>
+        <a href="#recent-games">Recent Games</a>
+        <a href="#history">Team History</a>
+        <a href="#fan-zone">Fan Zone</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- hero/intro section -->
+    <section id="hero" class="panel hero">
+      <div class="hero-content">
+        <h1>Viva La Spurs</h1>
+        <img src="images/spurslogo1.png"
+          alt="San Antonio Spurs wordmark"
+          class="hero-wordmark"
+        />
+        <p class="hero-tagline">
+          A San Antonio Spurs fan hub mixing <strong>current results</strong>, <strong>legendary
+          history</strong>, and <strong>interactive tools</strong>.
+        </p>
+        <p id="team-blurb" class="hero-team-blurb">
+          Loading team info…
+        </p>
+        <button class="btn primary" data-scroll-target="#recent-games">
+          View Recent Games
+        </button>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-slideshow">
+          <img src="images/spurs1.png" alt="San Antonio Spurs 1" class="hero-slide active" />
+          <img src="images/spurs2.png" alt="San Antonio Spurs 2" class="hero-slide" />
+          <img src="images/spurs3.png" alt="San Antonio Spurs 3" class="hero-slide" />
+        </div>
+      </div>
+    </section>
+
+    <!-- recent games section -->
+    <section id="recent-games" class="panel">
+      <header class="panel-header">
+        <div>
+          <h2>Recent Games</h2>
+          <p class="panel-subtitle">
+            Latest Spurs results from the BallDontLie API.
+          </p>
+        </div>
+            <div class="games-meta">
+      <span id="season-label" class="season-label"></span>
+
+      <label class="season-select">
+        Season:
+        <select id="season-select"></select>
+      </label>
+
+      <div class="filter-toggle" aria-label="Filter recent games">
+        <button class="btn chip chip-active" data-filter="all">All Games</button>
+        <button class="btn chip" data-filter="wins">Wins Only</button>
+      </div>
+    </div>
+
+        </div>
+      </header>
+
+      <div id="games-container" class="games-grid">
+        <p class="loading-text">Loading recent games…</p>
+      </div>
+
+        <button
+          id="load-more-games"
+          class="btn secondary load-more-btn"
+          type="button"
+        >
+          Load more games
+        </button>
+
+        <button
+          id="collapse-games"
+          class="btn secondary collapse-btn"
+          type="button"
+        >
+          Collapse games
+        </button>
+
+        <p class="hint-text">
+          Tip: Click a game card to expand details. Click the ★ Favorite button to save it to
+          your Fan Zone.
+        </p>
+      </section>
+
+    <!-- team history & legends section -->
+    <section id="history" class="panel">
+      <header class="panel-header">
+        <div>
+          <h2>Team History &amp; Legends</h2>
+          <p class="panel-subtitle">
+            A timeline of iconic Spurs eras — click an era to expand.
+          </p>
+        </div>
+      </header>
+
+      <div class="timeline">
+        <article class="timeline-item open">
+          <button class="timeline-item-header">
+            <span class="timeline-era">The Iceman Era</span>
+            <span class="timeline-years">1970s–early 1980s</span>
+          </button>
+          <div class="timeline-item-body">
+            <p>
+              <strong>George Gervin</strong>, “The Iceman,” turned scoring into an art form.
+              His silky finger roll and effortless buckets helped cement the Spurs as a
+              permanent part of the NBA landscape, putting San Antonio on the basketball map
+              long before the championship years.
+            </p>
+          </div>
+        </article>
+
+        <article class="timeline-item">
+          <button class="timeline-item-header">
+            <span class="timeline-era">The Dynasty: Duncan, Manu, Parker</span>
+            <span class="timeline-years">Late 1990s–2010s</span>
+          </button>
+          <div class="timeline-item-body">
+            <p>
+              Guided by <strong>Tim Duncan</strong>, <strong>Manu Ginóbili</strong>, and
+              <strong>Tony Parker</strong>, the Spurs became a model of unselfish,
+              beautiful basketball. Five championships, a legendary coach in Popovich, and a
+              culture built on humility and excellence defined this era.
+            </p>
+          </div>
+        </article>
+
+        <article class="timeline-item">
+          <button class="timeline-item-header">
+            <span class="timeline-era">The Wembanyama Era</span>
+            <span class="timeline-years">2020s–Future</span>
+          </button>
+          <div class="timeline-item-body">
+            <p>
+              <strong>Victor Wembanyama</strong> brings size, skill, and creativity the
+              league has never seen in one package. The Spurs are once again in the spotlight,
+              blending their historic culture with a futuristic superstar built for the modern
+              game.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- fan zone section -->
+    <section id="fan-zone" class="panel fan-zone">
+      <header class="panel-header">
+        <div>
+          <h2>Fan Zone</h2>
+          <p class="panel-subtitle">
+            Save your favorite games and test your Spurs knowledge.
+          </p>
+        </div>
+      </header>
+
+      <div class="fan-zone-grid">
+        <!-- favorites section -->
+        <section class="fan-block">
+          <h3>My Favorite Games</h3>
+          <p class="fan-block-subtitle">
+            Favorites are saved in your browser via local storage.
+          </p>
+          <div id="favorites-list" class="favorites-list">
+            <p class="hint-text">No favorite games yet — add some from the Recent Games section.</p>
+          </div>
+        </section>
+
+        <!-- trivia quiz section -->
+        <section class="fan-block">
+          <h3>Spurs Trivia</h3>
+          <p class="fan-block-subtitle">
+            Quick quiz on franchise history and legends.
+          </p>
+
+          <div class="quiz-card">
+            <div id="quiz-progress" class="quiz-progress"></div>
+            <p id="quiz-question" class="quiz-question">Loading trivia…</p>
+            <div id="quiz-options" class="quiz-options"></div>
+            <p id="quiz-feedback" class="quiz-feedback"></p>
+
+            <div class="quiz-footer">
+              <button id="quiz-next" class="btn secondary" disabled>Next Question</button>
+              <span id="quiz-score" class="quiz-score"></span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      Final Project for CSE 2004 - Viva La Spurs. Data from
+      <a href="https://app.balldontlie.io/" target="_blank" rel="noreferrer">BallDontLie API</a>.
+    </p>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
