@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Spurs API Test (BallDontLie)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 2rem;
+      background: #111;
+      color: #f5f5f5;
+    }
+    h1, h2 {
+      margin-bottom: 0.5rem;
+    }
+    #team-info, #games-list {
+      margin-bottom: 2rem;
+      padding: 1rem;
+      border: 1px solid #444;
+      border-radius: 8px;
+    }
+    .game-card {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #333;
+    }
+    .game-card:last-child {
+      border-bottom: none;
+    }
+    .status-win { color: #4caf50; font-weight: 600; margin-left: 0.5rem; }
+    .status-loss { color: #f44336; font-weight: 600; margin-left: 0.5rem; }
+    .error { color: #ff9800; }
+    #season-label {
+      opacity: 0.7;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>San Antonio Spurs – API Test (BallDontLie)</h1>
+
+  <section id="team-info">
+    <h2>Team Info</h2>
+    <div id="team-content">Loading team info…</div>
+  </section>
+
+  <section id="games-list">
+    <h2>Recent Games</h2>
+    <div id="season-label"></div>
+    <div id="games-content">Loading recent games…</div>
+  </section>
+
+  <script>
+    const API_KEY = "36c123e4-1d22-4f1a-b444-011d38c62afe";
+    const SPURS_ID = 27;
+
+    // BallDontLie uses season start year, so 2022 = 2022–2023
+    const ACTIVE_SEASON = 2022;
+
+    // Fetch Team Info
+    async function fetchTeamInfo() {
+      const teamDiv = document.getElementById("team-content");
+
+      try {
+        const res = await fetch(`https://api.balldontlie.io/v1/teams/${SPURS_ID}`, {
+          headers: { Authorization: `Bearer ${API_KEY}` }
+        });
+
+        if (!res.ok) throw new Error("Team fetch failed");
+
+        const json = await res.json();
+        const team = json.data;
+
+        teamDiv.innerHTML = `
+          <p><strong>Name:</strong> ${team.full_name}</p>
+          <p><strong>Conference:</strong> ${team.conference}</p>
+          <p><strong>Division:</strong> ${team.division}</p>
+          <p><strong>City:</strong> ${team.city}</p>
+        `;
+      } catch (err) {
+        console.error(err);
+        teamDiv.innerHTML = `<p class="error">Error loading team info.</p>`;
+      }
+    }
+
+    // Fetch Most Recent 10 Games
+    async function fetchRecentGames() {
+      const gamesDiv = document.getElementById("games-content");
+      const labelDiv = document.getElementById("season-label");
+
+      labelDiv.textContent = `Season: ${ACTIVE_SEASON}`;
+
+      try {
+        const url = 
+          `https://api.balldontlie.io/v1/games?team_ids[]=${SPURS_ID}&seasons[]=${ACTIVE_SEASON}&per_page=100`;
+
+        console.log("Fetching URL:", url);
+
+        const res = await fetch(url, {
+          headers: { Authorization: `Bearer ${API_KEY}` }
+        });
+
+        if (!res.ok) throw new Error("Failed to fetch games");
+
+        const data = await res.json();
+        let games = data.data;
+
+        if (!Array.isArray(games) || games.length === 0) {
+          gamesDiv.textContent = "No games available for this season.";
+          return;
+        }
+
+        // SORT games by date DESC
+        games.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        // Take only the most recent 10
+        games = games.slice(0, 10);
+
+        gamesDiv.innerHTML = games
+          .map(game => {
+            const home = `${game.home_team.city} ${game.home_team.name}`;
+            const away = `${game.visitor_team.city} ${game.visitor_team.name}`;
+
+            const homeScore = game.home_team_score;
+            const awayScore = game.visitor_team_score;
+
+            const spursAtHome = game.home_team.id === SPURS_ID;
+            const spursScore = spursAtHome ? homeScore : awayScore;
+            const oppScore = spursAtHome ? awayScore : homeScore;
+            const isWin = spursScore > oppScore;
+
+            return `
+              <div class="game-card">
+                <strong>${game.date.slice(0, 10)}</strong><br>
+                ${away} @ ${home}<br>
+                Score: ${homeScore} – ${awayScore}
+                <span class="${isWin ? "status-win" : "status-loss"}">
+                  ${isWin ? "W" : "L"}
+                </span>
+              </div>
+            `;
+          })
+          .join("");
+
+      } catch (err) {
+        console.error(err);
+        gamesDiv.innerHTML = `<p class="error">Error loading recent games.</p>`;
+      }
+    }
+
+    // Run both fetch requests
+    fetchTeamInfo();
+    fetchRecentGames();
+  </script>
+</body>
+</html>

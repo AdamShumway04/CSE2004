@@ -1,0 +1,269 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+:root {
+  --red: #b22234;
+  --blue: #2f4f90;
+  --white: #ffffff;
+  --gray: #f4f5f7;
+  --text: #1a1a1a;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--gray);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  line-height: 1.6;
+  letter-spacing: 0.3px;
+}
+
+/* Header */
+header {
+  background: linear-gradient(90deg, var(--blue), #203a70);
+  color: var(--white);
+  text-align: center;
+  padding: 2rem 1rem;
+  border-bottom: 4px solid var(--red);
+}
+
+header h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+header p {
+  margin-top: 0.6rem;
+  font-weight: 400;
+  color: #d9e0f5;
+  font-size: 1.05rem;
+}
+
+/* Main container */
+main {
+  flex: 1;
+  width: min(850px, 90%);
+  margin: 2rem auto;
+  background: var(--white);
+  padding: 2.2rem;
+  border-radius: 20px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+}
+
+/* Sport logos */
+.sport-selector {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1.8rem;
+}
+
+.pill {
+  background: var(--white);
+  border: 3px solid var(--blue);
+  border-radius: 18px;
+  width: 110px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.pill img {
+  width: 75px;
+  height: 75px;
+  object-fit: contain;
+}
+
+.pill:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.pill[aria-pressed="true"] {
+  border-color: var(--red);
+  box-shadow: 0 0 14px rgba(178, 34, 52, 0.6);
+  transform: scale(1.12);
+}
+
+/* Inputs and Buttons */
+.input-area {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+input[type="number"] {
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  width: 200px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="number"]:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 6px rgba(47, 79, 144, 0.3);
+  outline: none;
+}
+
+button {
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--white);
+  background: var(--red);
+  font-size: 0.95rem;
+  letter-spacing: 0.3px;
+  transition: all 0.25s ease;
+}
+button:hover {
+  transform: translateY(-2px);
+  background: #9c1d2d;
+}
+button.secondary {
+  background: var(--blue);
+}
+button.secondary:hover {
+  background: #203a70;
+}
+
+/* Error banner */
+.error {
+  background: #ffdddd;
+  color: #a00;
+  padding: 0.8rem;
+  border-radius: 8px;
+  margin: 1rem auto;
+  width: fit-content;
+  text-align: center;
+  border: 1px solid #f99;
+  font-weight: 500;
+}
+
+/* Results */
+.result {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.result h2 {
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+
+.placeholder {
+  font-weight: 500;
+  color: #444;
+  font-size: 1.2rem;
+  opacity: 0.85;
+  background: linear-gradient(90deg, rgba(47,79,144,0.1), rgba(178,34,52,0.1));
+  padding: 1rem;
+  border-radius: 10px;
+  margin: 1.5rem auto;
+  width: 85%;
+  transition: all 0.3s ease;
+}
+
+/* Decade Table */
+.decade {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.decade h3 {
+  color: var(--blue);
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+th, td {
+  padding: 0.8rem;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+thead {
+  background: var(--blue);
+  color: var(--white);
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+}
+tbody tr:nth-child(even) {
+  background: #f9f9f9;
+}
+tbody tr:hover {
+  background: rgba(47,79,144,0.1);
+  transition: background 0.2s ease;
+}
+/* MVP result heading styling */
+#resultBody h2 {
+  color: var(--blue);
+  font-weight: 700;
+  font-size: 1.35rem;
+  letter-spacing: 0.4px;
+  margin-bottom: 0.8rem;
+  text-shadow: 0 1px 2px rgba(47, 79, 144, 0.2);
+}
+/* MVP Chips inside result body */
+#resultBody .chips {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+#resultBody .chip {
+  background: var(--blue);
+  color: var(--white);
+  padding: 0.55rem 1.2rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 6px rgba(47, 79, 144, 0.25);
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+#resultBody .chip:hover {
+  transform: scale(1.07);
+  background: #203a70; /* darker version of your blue */
+  box-shadow: 0 4px 10px rgba(32, 58, 112, 0.35);
+}
+
+
+/* Footer */
+footer {
+  background: var(--blue);
+  color: var(--white);
+  text-align: center;
+  padding: 1rem 0;
+  font-weight: 500;
+  border-top: 3px solid var(--red);
+  letter-spacing: 0.3px;
+  font-size: 0.95rem;
+}
